@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .background {
+            position: relative;
+
+            height: 100vh;
+            width: 100%;
+        } */
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('https://placehold.co/600x400/EEE/31343C');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(40%);
+            /* Aplica o filtro escuro somente ao background */
+            z-index: -1;
+            /* Mantém o background atrás do conteúdo */
+        }
+
+        h1,
+        p {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div>
+            <h1>Conteúdo da Página</h1>
+            <p>Este conteúdo não será afetado pelo filtro de escurecimento.</p>
+        </div>
+    </div>
+</body>
+
+</html>
