@@ -1,3 +1,5 @@
+<!-- Arquivo estimativaPrecos.vue -->
+
 <template>
   <v-row align="center" justify="center" class="d-flex flex-column">
     <v-col cols="12" md="8">
@@ -33,21 +35,27 @@
               </v-row>
               <v-row>
                 <v-col cols="3">
-                  <v-combobox label="Tipo" :items="tiposImovel"></v-combobox>
+                  <v-combobox v-model="searchParams.propertyType" label="Tipo" :items="tiposImovel"></v-combobox>
                 </v-col>
                 <v-col cols="3">
-                  <v-select label="Quartos" :items="[1, 2, 3, 4, 5, 6]"></v-select>
+                  <v-select v-model="searchParams.roomsCount" :value="tiposImovel[0]" label="Quartos"
+                    :items="[1, 2, 3, 4]"></v-select>
                 </v-col>
                 <v-col cols="3">
-                  <v-date-input prepend-icon="" label="Ano de início (>=2025)"></v-date-input>
+                  <v-text-field type="number" value="2025" v-model="searchParams.startYear"
+                    label="Ano de início (>=2025)"></v-text-field>
+                  <!-- <v-date-input prepend-icon="" label="Ano de início (>=2025)"></v-date-input> -->
                 </v-col>
                 <v-col cols="3">
-                  <v-date-input prepend-icon="" label="Ano de final (<= 2050)"></v-date-input>
+                  <v-text-field type="number" value="2030" v-model="searchParams.endYear"
+                    label="Ano de final (<= 2050)"></v-text-field>
+                  <!-- <v-date-input prepend-icon="" label="Ano de final (<= 2050)"></v-date-input> -->
                 </v-col>
               </v-row>
             </v-container>
           </v-form>
-          <v-btn @click="loadResultPage" rounded="lg" size="x-large" color="purple" text="Gerar Estimativa" class="mb-4">
+          <v-btn @click="loadResultPage" rounded="lg" size="x-large" color="purple" text="Gerar Estimativa"
+            class="mb-4">
           </v-btn>
         </div>
       </v-sheet>
@@ -63,17 +71,21 @@ const tiposImovel = ref(['Casa', 'Apartamento', 'Condomínio', 'Rural'])
 const searchParams = ref({
   name: "",
   email: "",
-  propertyType: "",
-  roomsCount: 0,
-  startYear: 0,
-  endYear: 0
+  propertyType: "Casa",
+  roomsCount: 1,
+  startYear: 2025,
+  endYear: 2030,
 });
 
-function loadResultPage() {
-  router.push({
+async function loadResultPage() {
+  await navigateTo({
     path: "/resultadoEstimativa",
-    params: { searchParams }
-  });
+    query: searchParams.value
+  })
+  // router.push({
+  //   path: "/resultadoEstimativa",
+  //   query: searchParams.value
+  // });
 }
 
 </script>

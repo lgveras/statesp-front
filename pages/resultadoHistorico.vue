@@ -10,6 +10,9 @@
           <h2 class="text-h7 font-weight-black text-purple mb-2">
             {{ historyPrices.dataSourceName }} - {{ historyPrices.startYear }} - {{ historyPrices.endYear }}
           </h2>
+          <h6 class="text-h7 font-weight-black text-purple mb-2">
+            PARÂMETROS DE PESQUISA: Tipo - {{ historyPrices.propertyType }} | Quartos - {{ historyPrices.roomsCount }}
+          </h6>
 
           <v-table class="mb-12">
             <thead class="bg-grey-lighten-1 font-weight-black">
@@ -44,26 +47,20 @@
 </template>
 
 <script setup>
+
+const route = useRoute()
+const queryObj = route.query;
+const pathApi = `/api/historico?propertyType=${queryObj.propertyType}&roomsCount=${queryObj.roomsCount}&startYear=${queryObj.startYear}&endYear=${queryObj.endYear}`
+// console.log(pathApi);
+const { data } = await useFetch(pathApi)
+
 const historyPrices = ref({
   dataSourceName: "FIPEZAP",
-  startYear: 2010,
-  endYear: 2023,
-  data: [
-    { year: 2010, price: 99999.99, apreciationPerc: 0.1, apreciationAcc: 0.1 },
-    { year: 2011, price: 109999.99, apreciationPerc: 0.1, apreciationAcc: 0.2 },
-    { year: 2012, price: 120999.99, apreciationPerc: 0.1, apreciationAcc: 0.3 },
-    { year: 2013, price: 133099.99, apreciationPerc: 0.1, apreciationAcc: 0.4 },
-    { year: 2014, price: 146409.99, apreciationPerc: 0.1, apreciationAcc: 0.5 },
-    { year: 2015, price: 161050.99, apreciationPerc: 0.1, apreciationAcc: 0.6 },
-    { year: 2016, price: 177156.09, apreciationPerc: 0.1, apreciationAcc: 0.7 },
-    { year: 2017, price: 194871.70, apreciationPerc: 0.1, apreciationAcc: 0.8 },
-    { year: 2018, price: 214358.87, apreciationPerc: 0.1, apreciationAcc: 0.9 },
-    { year: 2019, price: 235794.76, apreciationPerc: 0.1, apreciationAcc: 1.0 },
-    { year: 2020, price: 259374.23, apreciationPerc: 0.1, apreciationAcc: 1.1 },
-    { year: 2021, price: 285311.65, apreciationPerc: 0.1, apreciationAcc: 1.2 },
-    { year: 2022, price: 313842.82, apreciationPerc: 0.1, apreciationAcc: 1.3 },
-    { year: 2023, price: 345227.10, apreciationPerc: 0.1, apreciationAcc: 1.4 }
-  ]
+  propertyType: queryObj.propertyType,
+  roomsCount: queryObj.roomsCount,
+  startYear: queryObj.startYear,
+  endYear: queryObj.endYear,
+  data: data.value.history
 })
 </script>
 

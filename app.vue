@@ -5,8 +5,7 @@
         <v-row align="center" justify="center" class="d-flex flex-column">
           <v-col cols="12" md="2">
             <nuxt-link to="/">
-              <v-img :width="100" class="box-center"
-                src="~/assets/imgs/logo_1.png">
+              <v-img :width="200" class="box-center" src="~/assets/imgs/logo_1.png">
               </v-img>
             </nuxt-link>
           </v-col>

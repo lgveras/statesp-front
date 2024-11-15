@@ -10,6 +10,7 @@
           <h2 class="text-h7 font-weight-black text-purple mb-2">
             {{ estimatedPrices.propertyType }} - {{ estimatedPrices.startYear }} - {{ estimatedPrices.endYear }}
           </h2>
+          
 
           <v-table class="mb-12">
             <thead class="bg-grey-lighten-1 font-weight-black">
@@ -44,27 +45,20 @@
 </template>
 
 <script setup>
+
+const route = useRoute()
+const queryObj = route.query;
+const pathApi = `/api/estimativa?propertyType=${queryObj.propertyType}&roomsCount=${queryObj.roomsCount}&startYear=${queryObj.startYear}&endYear=${queryObj.endYear}`
+// console.log(pathApi);
+const { data } = await useFetch(pathApi)
+
 const estimatedPrices = ref({
   propertyType: "Apartamento",
-  startYear: 2030,
-  endYear: 2043,
-  data: [
-    { year: 2030, price: 99999.99, apreciationPerc: 0.1, apreciationAcc: 0.1 },
-    { year: 2031, price: 109999.99, apreciationPerc: 0.1, apreciationAcc: 0.2 },
-    { year: 2032, price: 120999.99, apreciationPerc: 0.1, apreciationAcc: 0.3 },
-    { year: 2033, price: 133099.99, apreciationPerc: 0.1, apreciationAcc: 0.4 },
-    { year: 2034, price: 146409.99, apreciationPerc: 0.1, apreciationAcc: 0.5 },
-    { year: 2035, price: 161050.99, apreciationPerc: 0.1, apreciationAcc: 0.6 },
-    { year: 2036, price: 177156.09, apreciationPerc: 0.1, apreciationAcc: 0.7 },
-    { year: 2037, price: 194871.70, apreciationPerc: 0.1, apreciationAcc: 0.8 },
-    { year: 2038, price: 214358.87, apreciationPerc: 0.1, apreciationAcc: 0.9 },
-    { year: 2039, price: 235794.76, apreciationPerc: 0.1, apreciationAcc: 1.0 },
-    { year: 2040, price: 259374.23, apreciationPerc: 0.1, apreciationAcc: 1.1 },
-    { year: 2041, price: 285311.65, apreciationPerc: 0.1, apreciationAcc: 1.2 },
-    { year: 2042, price: 313842.82, apreciationPerc: 0.1, apreciationAcc: 1.3 },
-    { year: 2043, price: 345227.10, apreciationPerc: 0.1, apreciationAcc: 1.4 }
-  ]
+  startYear: queryObj.startYear,
+  endYear: queryObj.endYear,
+  data: data.value.estimated
 })
+
 </script>
 
 <style scoped>
